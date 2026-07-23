@@ -1,0 +1,435 @@
+What is the FileSystem Hierarchy standard(FHS)?
+The  FileSystem Hierarchy standard(FHS) is defines where different types of files should be stored in a Linux System
+
+Root Directory(/)
+Everthing in Linux starts from the root directory, represented by a single slash(/), every filesystem is mounted somewhere under /.
+/
+├── bin
+├── boot
+├── dev
+├── etc
+├── home
+├── lib
+├── media
+├── mnt
+├── opt
+├── proc
+├── root
+├── run
+├── sbin
+├── srv
+├── sys
+├── tmp
+├── usr
+└── var
+
+1. /bin --> Essential User Commands , Contains binary executables
+Conatins the essential commands required by all users
+Example:
+- ls
+- cp
+- mv
+- cat 
+- pwd
+- echo
+- mkdir
+- rm
+
+2. /sbin ---> System Administration Commands
+contains Commands mainly intended for system administration
+Examples:
+- ip 
+- fdisk
+- mkfs
+- reboot
+- shutdown
+These are typically used by Administrators(often via sudo)
+
+3. /etc (Editable Text Configuration)--> contains Configuration Files
+
+This is one of the most important directories
+It contains system-wide configuartion files
+
+Examples:
+- /etc/passwd
+- /etc/group
+- /etc/hosts
+- /etc/fstab
+- /etc/ssh
+- /etc/systemd
+
+Production examples:
+- ssh configuartion
+- network configuration
+- Service configuration
+- user information
+
+4. /home --> User Home Directories
+Every normal user gets a home directory
+
+Example:
+/home/alice
+/home/bob
+/home/vinod
+
+inside you'll find
+- Documents
+- Downloads
+- Projects
+- Personal confgurations files(often starting with .)
+
+5. /root --> Root User's Home
+this is not the root directory(/).
+its the home directory of the root user
+/root
+Only the root account normally uses this directory
+
+6. /boot --> Boot Files
+Contains files required to boot the operating system
+
+Examples:
+- vmlinuz
+- initramfs
+- grub
+these are used by the bootloader to start Linux
+
+7. /dev -- > Device Files
+In Linux , devices are represented as files
+Examples:
+- /dev/sda
+- /dev/sdb
+- /dev/null
+- /dev/random
+- /dev/tty
+
+8. /proc --> Process infromation
+
+A virtual filesystem created by the kernel
+
+It doesn't store data on disk. Instead, it expose kernel and process information.
+
+Example:
+- /proc/cpuinfo
+- /proc/meminfo
+- /proc/uptime
+
+9. /sys --> kernel & Hardware information
+
+Another virtual filesystem.
+
+provides information about:
+
+- hardware
+- Devices
+- Kernel settings
+
+Commonly used for advanced system administration and debugging
+
+10. /var --> variable Data
+
+Stores files that chnages frequently
+Examples:
+- /var/log
+- /var/cache
+- /var/spool
+- /var/tmp
+This is a key directory for troubleshooting.
+Useful logs iinclude:
+- /var/log/sys.log
+- /var/log/auth.log
+- /var/log/messages
+
+
+11. /tmp --> Temporary Files
+Applications store temporary files here.
+
+Characteristics:
+
+- Writable by all users (with special permissions)
+- Often cleaned automatically after reboot or periodically 
+
+12. /usr --> User Programs & Libraries
+
+Despite its name, this is not where user home directories are stored.
+
+It contains many installed applications and libraries.
+
+Examples:
+- /usr/bin
+- /usr/sbin
+- /usr/lib
+- /usr/share
+- /usr/local
+
+13. /opt --> Optional Software
+Used for optional third-party applications
+example:
+- /opt/sonarqube
+
+14. /mnt --> Temporary Mount Point
+Traditionally used to temporarily mount filesystems.
+example:
+sudo mount /dev/sdb1 /mnt
+
+15. /media — Removable Media
+Automatically mounted removable devices often appear here.
+
+Examples:
+
+- /media/cdrom
+- /media/usb
+
+16. /run — Runtime Data
+Stores runtime information since the last boot.
+Examples include:
+
+Process IDs (PID files)
+Socket files
+Runtime state
+
+The contents are typically cleared on reboot.
+
+---------------
+1. Which directory stores configuration files?
+
+Answer:
+
+The /etc directory stores system-wide configuration files.
+
+Examples:
+
+/etc/passwd → User information
+/etc/group → Group information
+/etc/hosts → Local hostname mapping
+/etc/fstab → Filesystem mount configuration
+/etc/ssh/sshd_config → SSH server configuration
+
+Interview Tip: Configuration files are generally plain text, making them easy to edit and automate.
+
+2. Where are normal users' home directories?
+
+Answer:
+
+Normal users' home directories are stored under /home.
+
+Example:
+
+/home/vinod
+/home/john
+/home/alice
+
+Each user has a personal workspace for files and settings.
+
+3. Which directory stores system logs?
+
+Answer:
+
+System logs are primarily stored in /var/log.
+
+Examples:
+
+/var/log/syslog
+/var/log/auth.log
+/var/log/messages (common on RHEL-based systems)
+/var/log/kern.log
+
+These logs are essential for troubleshooting system and application issues.
+
+4. Why is /proc called a virtual filesystem?
+
+Answer:
+
+/proc is called a virtual filesystem because its files are generated dynamically by the Linux kernel rather than stored on disk.
+
+It provides real-time information about:
+
+Running processes
+CPU usage
+Memory
+Kernel parameters
+
+Examples:
+
+/proc/cpuinfo
+/proc/meminfo
+/proc/uptime
+5. What is the difference between / and /root?
+
+Answer:
+
+/	/root
+Root of the entire filesystem	Home directory of the root user
+Parent of all directories	Used only by the root account
+
+Example:
+
+/
+/home
+/etc
+/usr
+/root
+
+A common interview mistake is confusing the root directory (/) with the root user's home directory (/root).
+
+6. What is stored in /boot?
+
+Answer:
+
+The /boot directory contains the files required to start the operating system.
+
+Examples:
+
+Linux kernel (vmlinuz)
+Initial RAM filesystem (initramfs or initrd)
+GRUB bootloader files
+
+Without these files, the system cannot boot.
+
+7. Why are devices represented under /dev?
+
+Answer:
+
+Linux follows the principle that everything is treated as a file, including hardware devices.
+
+The /dev directory contains special device files that represent hardware.
+
+Examples:
+
+/dev/sda → Disk
+/dev/sdb → Another disk
+/dev/null → Discards all data written to it
+/dev/tty → Terminal device
+
+Applications interact with hardware through these device files.
+
+8. When would you use /mnt instead of /media?
+
+Answer:
+
+Use /mnt when you manually mount filesystems temporarily, such as an extra disk or a network share.
+
+Example:
+
+sudo mount /dev/sdb1 /mnt
+
+Use /media for removable devices that are automatically mounted, such as USB drives or DVDs.
+
+9. Explain the Linux Filesystem Hierarchy Standard (FHS).
+
+Answer:
+
+The Filesystem Hierarchy Standard (FHS) defines the standard directory structure and purpose of directories in Linux.
+
+It ensures that Linux distributions organize files consistently, making administration and troubleshooting easier.
+
+For example:
+
+/etc → Configuration
+/var → Logs and variable data
+/usr → Programs and libraries
+/home → User data
+
+10. What is the purpose of /etc?
+
+Answer:
+
+The /etc directory stores system-wide configuration files used by the operating system and installed applications.
+
+Examples include:
+
+User accounts
+Network settings
+SSH configuration
+Service configurations
+Filesystem mount configuration
+
+Administrators frequently edit files in /etc to configure the system.
+
+11. What is the difference between /home and /root?
+
+Answer:
+
+/home	/root
+Home directories for normal users	Home directory for the root user
+Accessible to each respective user	Intended only for the root account
+
+Example:
+
+/home/vinod
+/home/john
+/root
+
+12. Why is /proc not a normal filesystem?
+
+Answer:
+
+/proc is not a normal filesystem because it does not store permanent files on disk.
+
+Instead, the kernel creates its contents in memory on demand to expose current system and process information.
+
+This means the information changes as the system state changes.
+
+13. What kinds of files are stored in /var?
+
+Answer:
+
+The /var directory stores variable data, meaning files that change while the system is running.
+
+Examples:
+
+Log files (/var/log)
+Cache (/var/cache)
+Mail spools
+Print queues
+Temporary application data
+
+Applications continuously read from and write to this directory.
+
+14. What is the difference between /bin and /usr/bin on modern Linux systems?
+
+Answer:
+
+Historically:
+
+/bin contained essential user commands needed for booting and single-user mode.
+/usr/bin contained additional user applications.
+
+On many modern Linux distributions (such as Ubuntu), /bin is a symbolic link to /usr/bin, so the distinction is mostly historical.
+
+You can verify this by running:
+
+ls -ld /bin
+
+If it shows something like:
+
+/bin -> usr/bin
+
+then /bin is a symlink.
+
+15. Why is /opt commonly used for third-party software?
+
+Answer:
+
+The /opt directory is used to install optional or third-party software that is not part of the base operating system.
+
+Examples:
+
+SonarQube (/opt/sonarqube)
+Google Chrome
+Custom enterprise applications
+
+Keeping third-party software in /opt helps separate it from system-managed files, making upgrades, backups, and removal easier.
+
+Production Scenario
+
+Imagine your SonarQube service won't start.
+
+As a DevOps engineer, you might check:
+
+/opt/sonarqube → Installation files
+/etc/systemd/system/ → Service definition (if using a custom systemd service)
+/var/log/ or SonarQube's own logs → Error messages
+/proc → Running processes
+/dev → Disk devices if you suspect storage issues
+
+Understanding the FHS helps you quickly locate the relevant files and diagnose problems.

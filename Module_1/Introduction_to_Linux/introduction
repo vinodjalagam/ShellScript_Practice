@@ -1,0 +1,126 @@
+What is an Operating System?
+An Operating System(OS) is Software that acts as an interface between 
+the user and the computer hardware
+
+without an OS:
+-> Application cannot run
+-> hardware cannnot be managed efficiently
+-> Users cannot interact with the computer in a practical way
+
+Examples:
+Linux
+windows
+macOS
+
+What is Linux?
+A Linux is an Open-source Unix-Like Operaing System built around the Linux kernal
+
+Important Point:
+Linux itself is  technically the kernal. what most people call "Linux" is a complete operating 
+system built from the Linux kernal plus many other tools .
+
+What is Open source?
+Open source means the source code is publicly available.
+Anyone can:
+Read it, write it, improve it, Distribute it accordiing to its License
+
+Linux Architecture
+                USER
+                  │
+                  ▼
+        Applications (Chrome, Jenkins, Docker)
+                  │
+                  ▼
+               Shell (Bash, Zsh)
+                  │
+                  ▼
+            Linux Kernel
+                  │
+      ┌───────────┼───────────┐
+      │           │           │
+      ▼           ▼           ▼
+    CPU        Memory       Disk
+
+Components of Linux
+1. kernal
+The kernal is core of the operating System.
+Responsibilities:
+-> Process Management
+-> Memory Management
+-> Device drivers
+-> File System Mangement
+-> Networking
+-> Security
+
+2. Shell
+The shell is the command iterpreter
+examples
+-> bash
+-> zsh
+-> fish
+-> Ksh
+
+When is type:
+ls
+the shell:
+- read the command
+- Find the excutable
+- request the kernal to run it
+- Display the output
+
+What Happens When You Run ls?
+The flow is:
+    Keyboard
+        │
+        ▼
+    Bash Shell
+        │
+        ▼
+    Kernel
+        │
+        ▼
+    Filesystem
+        │
+        ▼
+    Kernel returns directory entries
+        │
+        ▼
+    Shell prints the result
+
+
+User Space Vs kernal Space
+
+User Space
+
+Application run here
+
+Example:
+- chrome
+- Docker CLI
+- vim
+- Python
+Applications cannot directly access hardware
+
+Kernal Space:
+The kernal runs here.
+Only the kernel can directly
+- Access memory
+- Read disks
+- Control the CPU
+- Manage devices
+- Schedule processes
+
+Commands:
+uname -> Display the kernal
+uname -r -> Display the kernal version
+uname -a -> Display the full information
+hostname -> Disply the hostname
+whoami -> show the current user
+id --> Show your user ID (UID), group ID (GID), and group memberships.
+pwd -> prit the present working dir
+date -> display the current date and time
+uptime -> Show how long the system has been running and the current load
+
+Why is Linux preferred for servers and DevOps?
+Linux is the preferred operating system for servers and DevOps because it is stable, secure, high-performing, highly customizable, and open source. It also forms the foundation of most modern cloud and container platforms.
+

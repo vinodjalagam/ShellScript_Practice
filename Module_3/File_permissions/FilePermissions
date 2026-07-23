@@ -1,0 +1,177 @@
+1. linux Security Model
+Every file and directory in linux has:
+- An owner
+- A group
+- Permissions for the owner, group, and others
+
+run:
+ls -l
+
+2. Understanding ls -l Output
+-rwxr-xr--
+this string as 10 characters represents the file type and permissions:
+- The first character indicates the file type:
+  - '-' for a regular file
+  - 'd' for a directory
+  - 'l' for a symbolic link
+- The next 9 characters are divided into three sets of three characters each, representing the permissions
+  - The first set of three characters represents the owner's permissions
+  - The second set of three characters represents the group's permissions
+  - The third set of three characters represents the permissions for others
+
+- rwx r-x r--
+│ │   │   │
+│ │   │   └── Others
+│ │   └────── Group
+│ └────────── Owner
+└──────────── File Type
+
+| Symbol | Meaning          |
+| ------ | ---------------- |
+| `-`    | Regular file     |
+| `d`    | Directory        |
+| `l`    | Symbolic link    |
+| `c`    | Character device |
+| `b`    | Block device     |
+| `p`    | Named pipe       |
+| `s`    | Socket           |
+
+
+3. Understanding Permissions
+The permissions are represented by the following characters:
+- 'r' for read permission
+- 'w' for write permission
+- 'x' for execute permission
+
+| Permission | Symbol | Value |
+| ---------- | ------ | ----- |
+| Read       | `r`    |     4 |
+| Write      | `w`    |     2 |
+| Execute    | `x`    |     1 |
+
+
+Write Permissions(w):
+for a file:
+- Allows the user to modify the contents of the file
+for a directory:
+- Allows the user to create, delete, and rename files within the directory
+
+Execute Permissions(x):
+for a file:
+- Allows the user to run the file as a program or script
+example: ./script.sh
+for a directory:
+- Allows the user to access the contents of the directory and its subdirectories
+example: cd directory_name
+
+Read Permissions(r):
+for a file:
+- Allows the user to view the contents of the file
+for a directory:
+- Allows the user to list the contents of the directory
+
+4. Owner, Group, and Others
+example:
+-rwxr-x---
+Breakdown:
+- Owner: rwx (read, write, execute)
+- Group: r-x (read, execute)
+- Others: --- (NO permissions)
+
+5. Numeric Representation of Permissions
+permission values can be represented numerically:
+- Read (r) = 4
+- Write (w) = 2
+- Execute (x) = 1
+
+| Numeric | Meaning     |
+| ------: | ----------- |
+|       7 | rwx (4+2+1) |
+|       6 | rw- (4+2)   |
+|       5 | r-x (4+1)   |
+|       4 | r--         |
+|       0 | ---         |
+
+
+| Mode | Meaning                           |
+| ---- | --------------------------------- |
+| 777  | Everyone has full access          |
+| 755  | Owner full, others read & execute |
+| 750  | Owner full, group read & execute  |
+| 700  | Owner only                        |
+| 644  | Owner read/write, others read     |
+| 600  | Owner read/write only             |
+
+6. chmod Command:
+change the permissions of a file or directory using the chmod command.
+- Syntax: chmod [options] mode file/directory
+- Example: chmod 755 myfile.txt
+
+Symbolic Mode
+- chmod u+x script.sh
+- chmod g-w file.txt
+- chmod o-r file.txt
+- chmod a+x script.sh
+
+7. chown Command:
+change the owner and group of a file or directory using the chown command.
+- Syntax: chown [options] owner:group file/directory
+- Example: chown user1:group1 myfile.txt
+
+change owner and group:
+sudo chown vinod:developer file.txt
+
+8. chgrp Command:
+change the group of a file or directory using the chgrp command.
+- Syntax: chgrp [options] group file/directory
+- Example: chgrp group1 myfile.txt
+
+change group:
+sudo chgrp developer file.txt
+
+9. umask Command:
+umask command is used to set default permissions for newly created files and directories.
+- Syntax: umask [options] [mask]
+- Example: umask 022
+
+Example:
+- If umask is set to 002, new files will have 
+  permissions of 664 (rw-rw-r--) and new directories
+  will have permissions of 775 (rwxr-xr-x).
+
+10. Hard Links and Soft Links
+- Hard Link:
+  - A hard link is a directory entry that associates a name with a file on a file system.
+  - Hard links share the same inode number and point to the same data blocks on the disk.
+  - Deleting the original file does not affect the hard link, as both point to the same data.
+  - Hard links cannot span across different file systems and cannot be created for directories
+example: ln file1.txt file2.txt
+
+
+- Soft Link (Symbolic Link):
+  - A soft link is a special type of file that contains a reference to another file or directory in the form of an absolute or relative path.
+  - Soft links have their own inode number and point to the original file's path.
+  - Deleting the original file will break the soft link, making it point to a non-existent file.
+  - Soft links can span across different file systems and can be created for directories.
+example: ln -s /path/to/original/file.txt /path/to/symlink/file.txt
+
+
+12. What is an inode?
+An inode (index node) is a data structure on a filesystem that stores 
+information about a file
+
+It contains metadata about the file, such as:
+- File type (regular file, directory, symbolic link, etc.)
+- Permissions (read, write, execute)
+- Owner and group information
+- Timestamps (creation, modification, access times)
+- Size of the file
+- Pointers to the data blocks where the actual file content is stored
+- Link count (number of hard links pointing to the inode)
+
+It does not store the filename.
+
+The filename is stored in the directory entry, which points to the inode.
+example:
+ls -li
+
